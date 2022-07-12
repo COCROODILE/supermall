@@ -5,11 +5,25 @@
 </template>
 <script>
 import NavBar from '@/components/common/navbar/NavBar.vue'
-import {getHomeMultidata} from 'network/home'
+import {getHmoeMultidata} from 'network/home'
 export default {
   name: 'Home',
   components:{
     NavBar
+  },
+  data(){
+    return{
+      banners:[],
+      recommends:[]
+    }
+  },
+  created(){
+    // 1.请求多个数据
+    getHmoeMultidata().then(res => {
+      // console.log(res);
+      this.banners=res.data.banner,
+      this.recommends=res.data.recommend
+    })
   }
 }
 </script>
