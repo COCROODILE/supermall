@@ -5,6 +5,26 @@
       <li>分类列表1</li>
       <li>分类列表1</li>
       <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
+      <li>分类列表1</li>
     </ul>
   </div>
 </template>
@@ -13,10 +33,12 @@ import BScroll from "better-scroll";
 export default {
   name: "Category",
   data() {
-    return {};
+    return {
+      scroll: null,
+    };
   },
-  created() {
-    let bs = new BScroll(".content", {});
+  mounted() {
+    this.scroll = new BScroll(document.querySelector(".wrapper"), {});
   },
 };
 </script>
@@ -24,6 +46,7 @@ export default {
 .wrapper {
   height: 150px;
   background-color: red;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
+  overflow: hidden;
 }
 </style>
