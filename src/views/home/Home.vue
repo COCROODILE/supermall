@@ -1,15 +1,17 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-    <home-swiper :banners="banners"></home-swiper>
-    <recommend-view :recommends="recommends"></recommend-view>
-    <feature-view />
-    <tab-control
-      @tabClick="tabClick"
-      :titles="['流行', '新款', '精选']"
-      class="tab-control"
-    />
-    <goods-list :goods="showGoods" />
+    <scroll class="content">
+      <home-swiper :banners="banners"></home-swiper>
+      <recommend-view :recommends="recommends"></recommend-view>
+      <feature-view />
+      <tab-control
+        @tabClick="tabClick"
+        :titles="['流行', '新款', '精选']"
+        class="tab-control"
+      />
+      <goods-list :goods="showGoods" />
+    </scroll>
   </div>
 </template>
 <script>
@@ -25,6 +27,8 @@ import { getHomeMultidata, getHomeGoods } from "network/home";
 // import Swiper from '@/components/common/swiper/Swiper.vue'
 // import SwiperItem from '@/components/common/swiper/SwiperItem.vue'
 // import { Swiper,SwiperItem } from '@/components/common/swiper'
+
+import Scroll from "@/components/common/scroll/Scroll.vue";
 export default {
   name: "Home",
   components: {
@@ -34,6 +38,7 @@ export default {
     HomeSwiper,
     RecommendView,
     FeatureView,
+    Scroll,
   },
   data() {
     return {
@@ -98,7 +103,9 @@ export default {
 </script>
 <style scoped>
 #home {
-  padding-top: 44px;
+  /* padding-top: 44px; */
+  /* vh是viewpoint height（视口高度） */
+  height: 100vh;
 }
 .home-nav {
   background-color: var(--color-tint);
@@ -114,5 +121,19 @@ export default {
   position: sticky;
   top: 44px;
   z-index: 9;
+}
+/* .content {
+  height: calc(100% - 93px);
+  overflow: hidden;
+  margin-top: 44px;
+} */
+
+.content {
+  overflow: hidden;
+  position: absolute;
+  top: 44px;
+  bottom: 49px;
+  left: 0;
+  right: 0;
 }
 </style>
