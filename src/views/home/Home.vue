@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-    <scroll class="content">
+    <scroll class="content" ref="scroll">
       <home-swiper :banners="banners"></home-swiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view />
@@ -12,12 +12,16 @@
       />
       <goods-list :goods="showGoods" />
     </scroll>
+
+    <!-- native修饰符：监听组件的原生事件 -->
+    <back-top @click.native="backClick" />
   </div>
 </template>
 <script>
 import NavBar from "@/components/common/navbar/NavBar.vue";
 import TabControl from "@/components/content/tabControl/TabControl.vue";
 import GoodsList from "@/components/content/goods/GoodsList.vue";
+import BackTop from "@/components/content/backTop/BackTop.vue";
 
 import HomeSwiper from "./childComps/HomeSwiper.vue";
 import RecommendView from "./childComps/RecommendView.vue";
@@ -35,6 +39,7 @@ export default {
     NavBar,
     TabControl,
     GoodsList,
+    BackTop,
     HomeSwiper,
     RecommendView,
     FeatureView,
@@ -81,6 +86,10 @@ export default {
           this.currentType = "sell";
           break;
       }
+    },
+    backClick() {
+      // console.log('backClick');
+      this.$refs.scroll.scrollTo(0, 0, 500);
     },
     // 网络请求相关方法
     getHomeMultidata() {
