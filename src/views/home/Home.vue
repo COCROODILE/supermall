@@ -1,7 +1,14 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-    <scroll class="content" ref="scroll">
+    <scroll
+      class="content"
+      ref="scroll"
+      :probe-type="3"
+      @scroll="contentScroll"
+      :pull-up-load="true"
+      @pullingUp="loadMore"
+    >
       <home-swiper :banners="banners"></home-swiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view />
@@ -14,7 +21,7 @@
     </scroll>
 
     <!-- native修饰符：监听组件的原生事件 -->
-    <back-top @click.native="backClick" />
+    <back-top @click.native="backClick" v-show="isShowBackTop" />
   </div>
 </template>
 <script>
@@ -55,6 +62,7 @@ export default {
         sel: { page: 0, list: [] },
       },
       currentType: "pop",
+      isShowBackTop: false,
     };
   },
   computed: {
@@ -90,6 +98,13 @@ export default {
     backClick() {
       // console.log('backClick');
       this.$refs.scroll.scrollTo(0, 0, 500);
+    },
+    contentScroll(position) {
+      // console.log(position);
+      this.isShowBackTop = -(position.y > 1000);
+    },
+    loadMore(){
+      console.log('上拉加载更多');
     },
     // 网络请求相关方法
     getHomeMultidata() {
