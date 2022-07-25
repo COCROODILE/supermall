@@ -1,10 +1,124 @@
 <template>
-  <h2>个人</h2>
+  <div>
+    <scroll class="content">
+      <ul>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+        <li>个人信息</li>
+      </ul>
+    </scroll>
+  </div>
 </template>
 <script>
+import Scroll from "@/components/common/scroll/Scroll.vue";
 export default {
-  name: 'Profile'
-}
+  name: "Profile",
+  components: {
+    Scroll,
+  },
+};
 </script>
 <style scoped>
+.content {
+  height: 300px;
+  background-color: pink;
+  overflow: hidden;
+}
 </style>

@@ -40,6 +40,7 @@ export default {
   },
   mounted() {
     this.scroll = new BScroll(document.querySelector(".wrapper"), {
+      click: false,
       probeType: 3,
       pullUpLoad: true,
     });
