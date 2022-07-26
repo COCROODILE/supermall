@@ -16,6 +16,10 @@ export default {
       type: Number,
       default: 0,
     },
+    pullUpLoad: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -31,17 +35,27 @@ export default {
     });
 
     // 监听滚动的位置
-    this.scroll.on("scroll", (position) => {
-      // console.log(position);
-      this.$emit("scroll", position);
-    });
+    if (this.probeType === 2 || this.probeType === 3) {
+      this.scroll.on("scroll", (position) => {
+        // console.log(position);
+        this.$emit("scroll", position);
+      });
+    }
+
+    // 监听scroll滚动到底部
+    if (this.pullUpLoad) {
+      this.scroll.on("pullingUp", () => {
+        // console.log("监听到滚动到底部");
+        this.$emit("pullingUp");
+      });
+    }
   },
   methods: {
     scrollTo(x, y, time = 300) {
       this.scroll && this.scroll.scrollTo(x, y, time);
     },
     finishPullUp() {
-      this.scroll.finishPullUp();
+      this.scroll && this.scroll.finishPullUp();
     },
     refresh() {
       this.scroll && this.scroll.refresh();

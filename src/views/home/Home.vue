@@ -7,14 +7,16 @@
       :probe-type="3"
       @scroll="contentScroll"
       :pull-up-load="true"
+      pulling-up="loadMore"
     >
-      <home-swiper :banners="banners"></home-swiper>
+      <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad" />
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view />
       <tab-control
         @tabClick="tabClick"
         :titles="['流行', '新款', '精选']"
-        class="tab-control"
+        ref="tabControl"
+        :class="{ fixed: isTabFixed }"
       />
       <goods-list :goods="showGoods" />
     </scroll>
@@ -37,6 +39,7 @@ import { getHomeMultidata, getHomeGoods } from "network/home";
 // import Swiper from '@/components/common/swiper/Swiper.vue'
 // import SwiperItem from '@/components/common/swiper/SwiperItem.vue'
 // import { Swiper,SwiperItem } from '@/components/common/swiper'
+import { debounce } from "@/common/util";
 
 import Scroll from "@/components/common/scroll/Scroll.vue";
 export default {
@@ -62,6 +65,8 @@ export default {
       },
       currentType: "pop",
       isShowBackTop: false,
+      tabOffsetTop: 0,
+      isTabFixed: false,
     };
   },
   computed: {
@@ -79,8 +84,8 @@ export default {
     this.getHomeGoods("sell");
   },
   mounted() {
-    const refresh=this.debounce(this.$refs.scroll.refresh,500)
-    // 3.监听item中图片加载完成
+    // 图片加载完成的事件监听
+    const refresh = debounce(this.$refs.scroll.refresh, 200);
     this.$bus.$on("itemImageLoad", () => {
       // console.log('---');
       refresh();
@@ -88,16 +93,7 @@ export default {
   },
   methods: {
     // 事件监听相关方法
-    debounce(func, delay) {
-      let timer = null;
-      return function (...args) {
-        if (timer) clearTimeout(timer);
 
-        timer = setTimeout(() => {
-          func.apply(this, args);
-        }, delay);
-      };
-    },
     tabClick(index) {
       // console.log(index);
       switch (index) {
@@ -118,7 +114,20 @@ export default {
     },
     contentScroll(position) {
       // console.log(position);
+      // 判断BackTop是否显示
       this.isShowBackTop = -(position.y > 1000);
+
+      // 决定tabControl是否吸顶(position:fixed)
+      this.isTabFixed = -position.y > this.tabOffsetTop;
+    },
+    loadMore() {
+      // console.log("加载更多方法");
+      this.getHomeGoods(this.currentType);
+    },
+    swiperImageLoad() {
+      // 获取tabControl的offsetTop
+      // 所有组件都有一个属性$el：用于获取组件中的元素
+      this.taboffsetTop = this.$refs.TabControl.$el.offsetTop;
     },
     // 网络请求相关方法
     getHomeMultidata() {
@@ -134,6 +143,9 @@ export default {
         // console.log(res);
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
+
+        // 完成上拉加载更多
+        this.refs.scroll.finishPullUp();
       });
     },
   },
@@ -155,11 +167,6 @@ export default {
   bottom: 0;
   z-index: 9;
 }
-.tab-control {
-  position: sticky;
-  top: 44px;
-  z-index: 9;
-}
 /* .content {
   height: calc(100% - 93px);
   overflow: hidden;
@@ -173,5 +180,11 @@ export default {
   bottom: 49px;
   left: 0;
   right: 0;
+}
+.fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 44px;
 }
 </style>
