@@ -1,6 +1,13 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
+    <tab-control
+        @tabClick="tabClick"
+        :titles="['流行', '新款', '精选']"
+        ref="tabControl1"
+        class="tab-control"
+        v-show="isTabFixed"
+    />
     <scroll
       class="content"
       ref="scroll"
@@ -9,14 +16,15 @@
       :pull-up-load="true"
       pulling-up="loadMore"
     >
-      <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad" />
+      <home-swiper 
+        :banners="banners"
+        @swiperImageLoad="swiperImageLoad" />
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view />
       <tab-control
         @tabClick="tabClick"
         :titles="['流行', '新款', '精选']"
-        ref="tabControl"
-        :class="{ fixed: isTabFixed }"
+        ref="tabControl2"
       />
       <goods-list :goods="showGoods" />
     </scroll>
@@ -67,12 +75,22 @@ export default {
       isShowBackTop: false,
       tabOffsetTop: 0,
       isTabFixed: false,
+      saveY: 0
     };
   },
   computed: {
     showGoods() {
       return this.goods[this.currentType].list;
     },
+  },
+  activated(){
+    // console.log('activated');
+    this.$refs.scroll.scrollTo(0, this.saveY, 0)
+    this.$refs.scroll.refresh()
+  },
+  deactivated(){
+    // console.log('deactivated');
+    this.saveY = this.$refs.scroll.getScrollY()
   },
   created() {
     // 1.请求多个数据
@@ -107,6 +125,8 @@ export default {
           this.currentType = "sell";
           break;
       }
+      this.refs.TabControl1.currentIndex=index
+      this.refs.TabControl2.currentIndex=index
     },
     backClick() {
       // console.log('backClick');
@@ -127,7 +147,7 @@ export default {
     swiperImageLoad() {
       // 获取tabControl的offsetTop
       // 所有组件都有一个属性$el：用于获取组件中的元素
-      this.taboffsetTop = this.$refs.TabControl.$el.offsetTop;
+      this.taboffsetTop = this.$refs.TabControl2.$el.offsetTop;
     },
     // 网络请求相关方法
     getHomeMultidata() {
@@ -160,12 +180,13 @@ export default {
 .home-nav {
   background-color: var(--color-tint);
   color: #fff;
-  position: fixed;
+  /* 在使用浏览器原生滚动时，为了让导航不跟随一起滚动 */
+  /* position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 9;
+  z-index: 9; */
 }
 /* .content {
   height: calc(100% - 93px);
@@ -181,10 +202,8 @@ export default {
   left: 0;
   right: 0;
 }
-.fixed {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 44px;
+.tab-control{
+  position: relative;
+  z-index: 9;
 }
 </style>
