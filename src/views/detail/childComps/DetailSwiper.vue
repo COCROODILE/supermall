@@ -1,5 +1,5 @@
 <template>
-  <swiper class="detail-swiper">
+  <swiper class="detail-swiper" >
     <swiper-item v-for="(item,index) in topImages" 
                   :key="index"
                   >
