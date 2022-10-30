@@ -16,7 +16,7 @@ export default {
     goodsItem: {
       type: Object,
       default() {
-        return {};
+        return {}
       },
     },
   },

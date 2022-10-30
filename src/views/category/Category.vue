@@ -45,10 +45,13 @@ export default {
       pullUpLoad: true,
     });
     this.scroll.on("scroll", (position) => {
-      console.log(position);
+      // console.log(position);
     });
     this.scroll.on("pullingUp", () => {
       console.log("上拉加载更多");
+      setTimeout(()=>{
+        this.scroll.finishPullUp()
+      },2000)
     });
   },
   methods: {
@@ -63,6 +66,6 @@ export default {
   height: 150px;
   background-color: red;
   /* overflow-y: scroll; */
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 </style>

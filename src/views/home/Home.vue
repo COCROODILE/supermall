@@ -14,7 +14,7 @@
       :probe-type="3"
       @scroll="contentScroll"
       :pull-up-load="true"
-      pulling-up="loadMore"
+      @pullingUp="loadMore"
     >
       <home-swiper 
         :banners="banners"
@@ -34,10 +34,10 @@
   </div>
 </template>
 <script>
-import NavBar from "@/components/common/navbar/NavBar.vue";
-import TabControl from "@/components/content/tabControl/TabControl.vue";
-import GoodsList from "@/components/content/goods/GoodsList.vue";
-import BackTop from "@/components/content/backTop/BackTop.vue";
+import NavBar from "components/common/navbar/NavBar.vue";
+import TabControl from "components/content/tabControl/TabControl.vue";
+import GoodsList from "components/content/goods/GoodsList.vue";
+import BackTop from "components/content/backTop/BackTop.vue";
 
 import HomeSwiper from "./childComps/HomeSwiper.vue";
 import RecommendView from "./childComps/RecommendView.vue";
@@ -69,7 +69,7 @@ export default {
       goods: {
         pop: { page: 0, list: [] },
         new: { page: 0, list: [] },
-        sel: { page: 0, list: [] },
+        sell: { page: 0, list: [] },
       },
       currentType: "pop",
       isShowBackTop: false,
@@ -133,9 +133,9 @@ export default {
       this.$refs.scroll.scrollTo(0, 0, 500);
     },
     contentScroll(position) {
-      // console.log(position);
+      // console.log(position); 
       // 判断BackTop是否显示
-      this.isShowBackTop = -(position.y > 1000);
+      this.isShowBackTop = (-position.y) > 1000
 
       // 决定tabControl是否吸顶(position:fixed)
       this.isTabFixed = -position.y > this.tabOffsetTop;
@@ -143,6 +143,7 @@ export default {
     loadMore() {
       // console.log("加载更多方法");
       this.getHomeGoods(this.currentType);
+      this.$refs.scroll.refresh()
     },
     swiperImageLoad() {
       // 获取tabControl的offsetTop
@@ -153,19 +154,19 @@ export default {
     getHomeMultidata() {
       getHomeMultidata().then((res) => {
         // console.log(res);
-        (this.banners = res.data.banner.list),
-          (this.recommends = res.data.recommend.list);
+        this.banners = res.data.banner.list
+        this.recommends = res.data.recommend.list
       });
     },
     getHomeGoods(type) {
       const page = this.goods[type].page + 1;
       getHomeGoods(type, page).then((res) => {
-        // console.log(res);
+        console.log(res);
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
 
         // 完成上拉加载更多
-        this.refs.scroll.finishPullUp();
+        this.$refs.scroll.finishPullUp();
       });
     },
   },

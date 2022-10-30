@@ -63,7 +63,4 @@ export default {
   margin-bottom: 2px;
 }
 
-.active {
-  color: red
-}
 </style>
