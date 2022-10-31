@@ -7,7 +7,7 @@
         ref="tabControl1"
         class="tab-control"
         v-show="isTabFixed"
-    />
+      />
     <scroll
       class="content"
       ref="scroll"
@@ -109,10 +109,10 @@ export default {
       // console.log('---');
       refresh();
     });
+
   },
   methods: {
     // 事件监听相关方法
-
     tabClick(index) {
       // console.log(index);
       switch (index) {
@@ -139,7 +139,7 @@ export default {
       this.isShowBackTop = (-position.y) > 1000
 
       // 决定tabControl是否吸顶(position:fixed)
-      this.isTabFixed = -position.y > this.tabOffsetTop;
+      this.isTabFixed = (-position.y) > this.tabOffsetTop;
     },
     loadMore() {
       // console.log("加载更多方法");
@@ -149,8 +149,10 @@ export default {
     swiperImageLoad() {
       // 获取tabControl的offsetTop
       // 所有组件都有一个属性$el：用于获取组件中的元素
-      this.taboffsetTop = this.$refs.TabControl2.$el.offsetTop;
+      this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
     },
+
+    
     // 网络请求相关方法
     getHomeMultidata() {
       getHomeMultidata().then((res) => {
@@ -162,7 +164,7 @@ export default {
     getHomeGoods(type) {
       const page = this.goods[type].page + 1;
       getHomeGoods(type, page).then((res) => {
-        console.log(res);
+        // console.log(res);
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
 
@@ -178,6 +180,7 @@ export default {
   /* padding-top: 44px; */
   /* vh是viewpoint height（视口高度） */
   height: 100vh;
+  position: relative;
 }
 .home-nav {
   background-color: var(--color-tint);
@@ -195,7 +198,10 @@ export default {
   overflow: hidden;
   margin-top: 44px;
 } */
-
+.tab-control{
+  position: relative;
+  z-index: 9;
+}
 .content {
   overflow: hidden;
   position: absolute;
@@ -204,8 +210,8 @@ export default {
   left: 0;
   right: 0;
 }
-.tab-control{
+/* .tab-control{
   position: relative;
   z-index: 9;
-}
+} */
 </style>

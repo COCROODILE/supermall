@@ -33,6 +33,8 @@ export default {
     isActive() {
       // this.$route:处于活跃状态的路由
       // 判断正在活跃的路径与四个item的路径是否有匹配
+      /* indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
+      如果没有找到匹配的字符串则返回 -1。 */
       return this.$route.path.indexOf(this.path) !== -1
     },
     activeStyle() {
