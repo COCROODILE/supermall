@@ -11,7 +11,7 @@ export function request(config) {
   // axios的拦截器
   // 请求拦截
   instance.interceptors.request.use(config => {
-    console.log(config);
+    // console.log(config);
     return config
     // 拦截的作用
     // 1.比如config中的一些信息不符合服务器的要求
@@ -21,7 +21,7 @@ export function request(config) {
     console.log(err);
   })
   instance.interceptors.response.use(res => {
-    console.log(res);
+    // console.log(res);
     return res.data
   }, err => {
     console.log(err);
