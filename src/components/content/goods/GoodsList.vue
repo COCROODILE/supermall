@@ -3,9 +3,8 @@
     <goods-list-item
       v-for="(item, index) in goods"
       :key="index"
-      :goodsItem="goodsItem"
+      :goods-item="item"
     />
-    {{ goods }}
   </div>
 </template>
 
@@ -22,7 +21,7 @@ export default {
     },
   },
   components: {
-    GoodsListItem,
+    GoodsListItem
   },
 };
 </script>
