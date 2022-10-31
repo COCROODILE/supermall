@@ -100,9 +100,10 @@ export default {
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
+
   },
   mounted() {
-    // 图片加载完成的事件监听
+    // 监听goodslistitem中图片加载完成
     const refresh = debounce(this.$refs.scroll.refresh, 200);
     this.$bus.$on("itemImageLoad", () => {
       // console.log('---');
