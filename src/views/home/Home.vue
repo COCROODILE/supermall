@@ -85,8 +85,8 @@ export default {
   },
   activated(){
     // console.log('activated');
-    this.$refs.scroll.scrollTo(0, this.saveY, 0)
     this.$refs.scroll.refresh()
+    this.$refs.scroll.scrollTo(0, this.saveY, 0)
   },
   deactivated(){
     // console.log('deactivated');
@@ -126,8 +126,8 @@ export default {
           this.currentType = "sell";
           break;
       }
-      this.refs.TabControl1.currentIndex=index
-      this.refs.TabControl2.currentIndex=index
+      this.refs.tabControl1.currentIndex=index
+      this.refs.tabControl2.currentIndex=index
     },
     backClick() {
       // console.log('backClick');

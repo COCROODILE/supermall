@@ -11,7 +11,8 @@ const Detail = () => import('views/detail/Detail.vue')
 // 安装插件
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+  {
     path: '',
     redirect: '/home'
   },

@@ -44,15 +44,33 @@
       }
     },
     mounted: function () {
-      // 1.操作DOM, 在前后添加Slide
+     /*  // 1.操作DOM, 在前后添加Slide
       setTimeout(() => {
         this.handleDom();
 
         // 2.开启定时器
         this.startTimer();
-      }, 200)
+      }, 200) */
+      if(document.querySelector('.swiper').childElementCount == 0){
+        this.observeSwiper()
+      }else{
+        this.handleDom()
+        this.startTimer()
+      }
     },
     methods: {
+      observeSwiper(){
+        const targetNode=document.querySelector('.swiper')
+        const config={childList:true}
+        const callback=(mutationsList,observer)=>{
+          this.handleDom()
+          this.startTimer()
+          observer.disconnect()
+        }
+        const observer=new MutationObserver(callback)
+        observer.observe(targetNode,config)
+      },
+
 		  /**
        * 定时器操作
        */
