@@ -8,15 +8,16 @@
         <div v-for="(item,index) in titles" 
              :key="index"
              class="title-item"
-             :class="{active:index===currentIndex}"
-             @click="titleClick(index)">{{item}}</div>
+             :class="{ active : currentIndex === index}"
+             @click="titleClick(index)"
+        >{{item}}</div>
       </div>
     </nav-bar>
   </div>  
 </template>
 
 <script>
-import NavBar from '@/components/common/navbar/NavBar.vue'
+import NavBar from 'components/common/navbar/NavBar.vue'
 
 export default {
   name:'DetailNavBar',
@@ -31,10 +32,12 @@ export default {
   },
   methods:{
     titleClick(index){
-      this.currentIndex=index
+      this.currentIndex = index
+      this.$emit('titleClick',index)
     },
     backClick(){
-      this.$router.back()
+      // this.$router.back()
+      this.$router.go(-1)
     }
   }
 }
@@ -43,7 +46,7 @@ export default {
 <style scoped>
   .title{
     display: flex;
-    font-size: 13px;
+    font-size: 14px;
   }
   .title-item{
     flex:1;
@@ -53,5 +56,6 @@ export default {
   }
   .back img{
     margin-top: 12px;
+    margin-left: 12px;
   }
 </style>

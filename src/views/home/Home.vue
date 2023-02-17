@@ -37,7 +37,7 @@
 import NavBar from "components/common/navbar/NavBar.vue";
 import TabControl from "components/content/tabControl/TabControl.vue";
 import GoodsList from "components/content/goods/GoodsList.vue";
-import BackTop from "components/content/backTop/BackTop.vue";
+// import BackTop from "components/content/backTop/BackTop.vue";
 
 import HomeSwiper from "./childComps/HomeSwiper.vue";
 import RecommendView from "./childComps/RecommendView.vue";
@@ -47,7 +47,7 @@ import { getHomeMultidata, getHomeGoods } from "network/home";
 // import Swiper from '@/components/common/swiper/Swiper.vue'
 // import SwiperItem from '@/components/common/swiper/SwiperItem.vue'
 // import { Swiper,SwiperItem } from '@/components/common/swiper'
-import { debounce } from "@/common/util";
+import { itemListenerMixin,backTopMixin } from "@/common/mixin";
 
 import Scroll from "@/components/common/scroll/Scroll.vue";
 export default {
@@ -56,7 +56,7 @@ export default {
     NavBar,
     TabControl,
     GoodsList,
-    BackTop,
+    // BackTop,
     HomeSwiper,
     RecommendView,
     FeatureView,
@@ -72,25 +72,30 @@ export default {
         sell: { page: 0, list: [] },
       },
       currentType: "pop",
-      isShowBackTop: false,
+      // isShowBackTop: false,
       tabOffsetTop: 0,
       isTabFixed: false,
       saveY: 0
     };
   },
+  mixins:[ itemListenerMixin,backTopMixin ],
   computed: {
     showGoods() {
       return this.goods[this.currentType].list;
     },
   },
   activated(){
-    // console.log('activated');
     this.$refs.scroll.refresh()
     this.$refs.scroll.scrollTo(0, this.saveY, 0)
+
   },
   deactivated(){
-    // console.log('deactivated');
+    // 保存Y值
     this.saveY = this.$refs.scroll.getScrollY()
+
+    // 取消全局事件的监听
+    this.$bus.$off('itemImageLoad',this.itemImgListener)
+
   },
   created() {
     // 1.请求多个数据
@@ -100,21 +105,15 @@ export default {
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
-
+    
   },
   mounted() {
-    // 监听goodslistitem中图片加载完成
-    const refresh = debounce(this.$refs.scroll.refresh, 200);
-    this.$bus.$on("itemImageLoad", () => {
-      // console.log('---');
-      refresh();
-    });
-
+    // 手动调用一次
+    this.tabClick(0)
   },
   methods: {
     // 事件监听相关方法
     tabClick(index) {
-      // console.log(index);
       switch (index) {
         case 0:
           this.currentType = "pop";
@@ -126,13 +125,11 @@ export default {
           this.currentType = "sell";
           break;
       }
-      this.refs.tabControl1.currentIndex=index
-      this.refs.tabControl2.currentIndex=index
+      
+      this.$refs.tabControl1.currentIndex = index
+      this.$refs.tabControl2.currentIndex = index
     },
-    backClick() {
-      // console.log('backClick');
-      this.$refs.scroll.scrollTo(0, 0, 500);
-    },
+
     contentScroll(position) {
       // console.log(position); 
       // 判断BackTop是否显示

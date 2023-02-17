@@ -2,7 +2,7 @@
   <div v-if="Object.keys(commentInfo).length !== 0" class="comment-info">
     <div class="info-header">
       <span class="header-title">用户评价</span>
-      <span class="header-more">更多<i class="arrow-right"></i></span>
+      <span class="header-more">更多<i class="arrow-right">&gt;</i></span>
     </div>
     <div class="info-user">
       <img :src="commentInfo.user.avatar" alt="">
@@ -31,14 +31,14 @@ export default {
     commentInfo: {
       type: Object,
       default() {
-        return {};
+        return {}
       },
     },
   },
   filters:{
     showDate(value){
       // 1.将时间戳转为Date对象
-      const date = new Date(value * 1000)
+      const date = new Date(value)
       // 2.将date进行格式化
       return formatDate(date,'yyyy-MM-dd')
     }
